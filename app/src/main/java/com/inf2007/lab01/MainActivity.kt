@@ -48,16 +48,17 @@ fun MainScreen() {
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                // Input Field for Name
                 UserInput(
-                    name = name,
-                    onNameChange = { name = it }
+                    name = username,
+                    onNameChange = { username = it }
                 )
 
+                // Submit Button
                 Button(
                     onClick = {
-                        if (username.isNotBlank()) {
-                            showGreeting = false
-                        }
+                        // Show greeting only if the input is not blank
+                        showGreeting = username.isNotBlank()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -66,14 +67,15 @@ fun MainScreen() {
                     Text("Submit")
                 }
 
+                // Display Greeting Message if showGreeting is true
                 if (showGreeting) {
-                    Greeeting(
+                    Greeting(
                         name = username,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 16.dp)
+                            .testTag("greetingMsg")
                     )
-
                 }
             }
         }
@@ -88,17 +90,15 @@ fun UserInput(name: String, onNameChange: (String) -> Unit, modifier: Modifier =
         label = { Text("Enter your Name") },
         modifier = modifier
             .fillMaxWidth()
-            .testTag("UserInput")
+            .testTag("nameInput") // Correct testTag for test case 1
     )
 }
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $username!, Welcome to InF2007!",
-        modifier = Modifier
-            .fillMaxWidth()
-            .testTag("greeting")
+        text = "Hello $name!, Welcome to INF2007!",
+        modifier = modifier
     )
 }
 
